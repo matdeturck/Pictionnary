@@ -13,8 +13,11 @@ import javafx.scene.paint.Color;
  */
 public class DrawingPane extends Parent implements IDrawing {
 
-    Canvas board;
-    GraphicsContext infoPaint;
+    private Canvas board;
+    private GraphicsContext infoPaint;
+    private ObjectProperty<Color> color;
+    private ObjectProperty<Integer> thickness;
+    private DrawingInfo infoDrawing;
 
     /**
      * Constructor for drawingPane
@@ -29,43 +32,52 @@ public class DrawingPane extends Parent implements IDrawing {
         infoPaint = board.getGraphicsContext2D();
 
         infoPaint.setLineWidth(6);
-
-        board.setOnMousePressed(e -> {
-            infoPaint.beginPath();
-            infoPaint.lineTo(e.getX(), e.getY());
-            infoPaint.stroke();
-        });
-
-        board.setOnMouseDragged(e -> {
-            infoPaint.lineTo(e.getX(), e.getY());
-            infoPaint.stroke();
-        });
+        isDrawing(true);
+        
 
         HBox hbox = new HBox();
         hbox.getChildren().add(board);
-        hbox.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;"
+        hbox.setStyle("-fx-padding: 5;" + "-fx-border-style: solid inside;"
                 + "-fx-border-width: 2;" + "-fx-border-color: black;");
         getChildren().add(hbox);
     }
 
+    public void isDrawing(boolean draw){
+        if (draw){
+            board.setOnMousePressed(e -> {
+            infoPaint.beginPath();
+            infoPaint.lineTo(e.getX(), e.getY());
+            infoPaint.stroke();
+
+         });
+
+        board.setOnMouseDragged(e -> {
+            infoPaint.lineTo(e.getX(), e.getY());
+            infoPaint.stroke();
+            });
+        }else {
+            board.setOnMousePressed(e -> {});
+            board.setOnMouseDragged(e -> {});
+        }
+    }
     @Override
     public void clearPane() {
         infoPaint.clearRect(0, 0, board.getWidth(), board.getHeight());
     }
 
     @Override
-    public DrawingInfos getDrawingInfos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public DrawingInfo getDrawingInfos() {
+        return infoDrawing;
     }
 
     @Override
-    public void setDrawingInfos(DrawingInfos dInfos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setDrawingInfos(DrawingInfo dInfos) {
+        infoDrawing= dInfos;
     }
 
     @Override
     public ObjectProperty<Color> colorProperty() {
-         throw new UnsupportedOperationException("Not supported yet."); 
+        return color;
     }
 
     @Override
@@ -75,7 +87,7 @@ public class DrawingPane extends Parent implements IDrawing {
 
     @Override
     public ObjectProperty<Integer> thicknessProperty() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return thickness;
     }
 
     @Override

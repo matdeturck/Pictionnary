@@ -20,7 +20,7 @@ public interface IDrawing {
      *
      * @return data needed to draw
      */
-    DrawingInfos getDrawingInfos();
+    DrawingInfo getDrawingInfos();
 
     /**
      * Set all the data needed to draw a picture a component.
@@ -28,7 +28,7 @@ public interface IDrawing {
      * @param dInfos data needed to draw a picture a component (can be a set of
      * points with color and thickness)
      */
-    void setDrawingInfos(DrawingInfos dInfos);
+    void setDrawingInfos(DrawingInfo dInfos);
 
     /**
      * Return the colorProperty of the drawing line.

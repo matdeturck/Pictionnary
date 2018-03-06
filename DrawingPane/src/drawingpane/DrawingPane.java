@@ -1,5 +1,6 @@
 package drawingpane;
 
+import java.util.ArrayList;
 import javafx.beans.property.ObjectProperty;
 import javafx.scene.Parent;
 import javafx.scene.canvas.*;
@@ -30,10 +31,9 @@ public class DrawingPane extends Parent implements IDrawing {
     public void initialize() {
         board = new Canvas(800, 500);
         infoPaint = board.getGraphicsContext2D();
-
+        infoDrawing = new DrawingInfo();
         infoPaint.setLineWidth(6);
         isDrawing(true);
-        
 
         HBox hbox = new HBox();
         hbox.getChildren().add(board);
@@ -42,24 +42,32 @@ public class DrawingPane extends Parent implements IDrawing {
         getChildren().add(hbox);
     }
 
-    public void isDrawing(boolean draw){
-        if (draw){
+    public void isDrawing(boolean draw) {
+        if (draw) {
             board.setOnMousePressed(e -> {
-            infoPaint.beginPath();
-            infoPaint.lineTo(e.getX(), e.getY());
-            infoPaint.stroke();
+                infoPaint.beginPath();
+                infoPaint.lineTo(e.getX(), e.getY());
+                infoPaint.stroke();
+                infoDrawing.addPoint((Color) infoPaint.getStroke(),
+                        (int) infoPaint.getLineWidth(),
+                        new Coordinates(e.getX(), e.getY()));
 
-         });
-
-        board.setOnMouseDragged(e -> {
-            infoPaint.lineTo(e.getX(), e.getY());
-            infoPaint.stroke();
             });
-        }else {
-            board.setOnMousePressed(e -> {});
-            board.setOnMouseDragged(e -> {});
+            board.setOnMouseDragged(e -> {
+                infoPaint.lineTo(e.getX(), e.getY());
+                infoPaint.stroke();
+                infoDrawing.addPoint((Color) infoPaint.getStroke(),
+                        (int) infoPaint.getLineWidth(),
+                        new Coordinates(e.getX(), e.getY()));
+            });
+        } else {
+            board.setOnMousePressed(e -> {
+            });
+            board.setOnMouseDragged(e -> {
+            });
         }
     }
+
     @Override
     public void clearPane() {
         infoPaint.clearRect(0, 0, board.getWidth(), board.getHeight());
@@ -72,7 +80,7 @@ public class DrawingPane extends Parent implements IDrawing {
 
     @Override
     public void setDrawingInfos(DrawingInfo dInfos) {
-        infoDrawing= dInfos;
+        infoDrawing = dInfos;
     }
 
     @Override
@@ -103,5 +111,14 @@ public class DrawingPane extends Parent implements IDrawing {
     @Override
     public void setColor(Color color) {
         infoPaint.setStroke(color);
+    }
+
+    public void charge() {
+        ArrayList<DrawingPoint> list = infoDrawing.getListPoints();
+        for (DrawingPoint list1 : list) {
+            infoPaint.setStroke(list1.getColor());
+            infoPaint.fillRect(list1.getCoord().getRow(), list1.getCoord().getColumn(),
+                    list1.getThickness(), list1.getThickness());
+        }
     }
 }

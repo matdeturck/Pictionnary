@@ -21,4 +21,8 @@ public class DrawingInfo {
     public void clear (){
         listPoints.clear();
     }
+
+    public ArrayList<DrawingPoint> getListPoints() {
+        return listPoints;
+    }
 }

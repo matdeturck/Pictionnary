@@ -6,8 +6,8 @@ package drawingpane;
  * @author g43353
  */
 public class Coordinates {
-    private final int row;
-    private final int column;
+    private final double row;
+    private final double column;
 
     /**
      * Constructor
@@ -15,7 +15,7 @@ public class Coordinates {
      * @param row Place on the row
      * @param column Place on the column
      */
-    public Coordinates(int row, int column) {
+    public Coordinates(double row, double column) {
         this.row = row;
         this.column = column;
     }
@@ -35,7 +35,7 @@ public class Coordinates {
      *
      * @return the value of row
      */
-    public int getRow() {
+    public double getRow() {
         return row;
     }
 
@@ -44,7 +44,7 @@ public class Coordinates {
      *
      * @return the value of column
      */
-    public int getColumn() {
+    public double getColumn() {
         return column;
     }
     
@@ -55,8 +55,8 @@ public class Coordinates {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 37 * hash + this.row;
-        hash = 37 * hash + this.column;
+        hash = (int) (37 * hash + this.row);
+        hash = (int) (37 * hash + this.column);
         return hash;
     }
     

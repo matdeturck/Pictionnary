@@ -16,9 +16,7 @@ import javafx.scene.layout.VBox;
 public class DrawingPaneControl extends Region {
 
     private DrawingPane board;
-    private ColorPicker color;
-    private Button clear;
-    private Slider width;
+   
 
     /**
      * Constructor for DrawingPaneControl
@@ -30,6 +28,11 @@ public class DrawingPaneControl extends Region {
         ColorPicker color = new ColorPicker();
         Button clear = new Button("Clear");
         Slider width = new Slider();
+        Button save = new Button("Save");
+        save.setOnAction(e->{
+            board.charge();
+            
+        });
         width = setWidthParam(width);
         color.setOnAction(e -> {
             board.setColor(color.getValue());
@@ -37,7 +40,7 @@ public class DrawingPaneControl extends Region {
         clear.setOnAction(e -> {
             board.clearPane();
         });
-        panel.getChildren().addAll(color, clear,width);
+        panel.getChildren().addAll(color, clear,width,save);
         panelBoard.getChildren().addAll(panel, board);
         getChildren().add(panelBoard);
     }

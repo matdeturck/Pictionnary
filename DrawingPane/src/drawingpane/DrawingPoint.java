@@ -10,12 +10,20 @@ import javafx.scene.paint.Color;
 public class DrawingPoint {
     private final Color color;
     private final int thickness;
-    private final Coordinates coord;
+    private final double row;
+    private final double column;
+    private boolean isFinished;
+
+    public void setIsFinished(boolean isFinished) {
+        this.isFinished = isFinished;
+    }
     
-    DrawingPoint(Color colored, int thick, Coordinates newCoord ){
+    DrawingPoint(Color colored, int thick, double newRow, double newColumn ){
+        isFinished = false;
         color= colored;
         thickness = thick;
-        coord = newCoord;
+        row = newRow;
+        column = newColumn;
     }
 
     public Color getColor() {
@@ -26,8 +34,17 @@ public class DrawingPoint {
         return thickness;
     }
 
-    public Coordinates getCoord() {
-        return coord;
+    public double getRow() {
+        return row;
+    }
+
+    public double getColumn() {
+        return column;
+    }
+
+
+    public boolean isIsFinished() {
+        return isFinished;
     }
     
     

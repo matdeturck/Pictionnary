@@ -14,12 +14,15 @@ public class DrawingInfo {
         listPoints = new ArrayList();
     }
     
-    public void addPoint(Color color , int thickness, Coordinates coord){
-        listPoints.add(new DrawingPoint(color,thickness,coord));
+    public void addPoint(Color color , int thickness, double row, double column){
+        listPoints.add(new DrawingPoint(color, thickness,row,column));
     }
     
     public void clear (){
         listPoints.clear();
+    }
+    public void release(){
+        listPoints.get(listPoints.lastIndexOf(this)).setIsFinished(true);
     }
 
     public ArrayList<DrawingPoint> getListPoints() {

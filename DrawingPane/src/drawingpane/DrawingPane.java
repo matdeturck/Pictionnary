@@ -50,7 +50,7 @@ public class DrawingPane extends Parent implements IDrawing {
                 infoPaint.stroke();
                 infoDrawing.addPoint((Color) infoPaint.getStroke(),
                         (int) infoPaint.getLineWidth(),
-                        new Coordinates(e.getX(), e.getY()));
+                        e.getX(), e.getY());
 
             });
             board.setOnMouseDragged(e -> {
@@ -58,7 +58,10 @@ public class DrawingPane extends Parent implements IDrawing {
                 infoPaint.stroke();
                 infoDrawing.addPoint((Color) infoPaint.getStroke(),
                         (int) infoPaint.getLineWidth(),
-                        new Coordinates(e.getX(), e.getY()));
+                        e.getX(), e.getY());
+            });
+            board.setOnMouseDragReleased(e -> {
+                infoDrawing.release();
             });
         } else {
             board.setOnMousePressed(e -> {
@@ -115,10 +118,15 @@ public class DrawingPane extends Parent implements IDrawing {
 
     public void charge() {
         ArrayList<DrawingPoint> list = infoDrawing.getListPoints();
+        infoPaint.beginPath();
         for (DrawingPoint list1 : list) {
-            infoPaint.setStroke(list1.getColor());
-            infoPaint.fillRect(list1.getCoord().getRow(), list1.getCoord().getColumn(),
-                    list1.getThickness(), list1.getThickness());
+            setColor(list1.getColor());
+            infoPaint.lineTo(list1.getRow(), list1.getColumn());
+            infoPaint.stroke();
+            if(list1.isIsFinished()){
+                infoPaint.closePath();
+            }
+                
         }
     }
 }

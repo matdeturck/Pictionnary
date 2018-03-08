@@ -16,8 +16,7 @@ import javafx.scene.layout.VBox;
 public class DrawingPaneControl extends Region {
 
     private DrawingPane board;
-   
-
+    
     /**
      * Constructor for DrawingPaneControl
      */
@@ -46,7 +45,7 @@ public class DrawingPaneControl extends Region {
     }
 
     /**
-     * Set all the param need for the slider
+     * Set all the parameter needed for the slider
      */
     private Slider setWidthParam(Slider width){
         width.setMin(5);

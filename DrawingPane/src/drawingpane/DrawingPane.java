@@ -1,10 +1,7 @@
 package drawingpane;
 
 import java.util.ArrayList;
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.ObjectProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Parent;
 import javafx.scene.canvas.*;
 import javafx.scene.layout.HBox;
@@ -45,6 +42,10 @@ public class DrawingPane extends Parent implements IDrawing {
         getChildren().add(hbox);
     }
 
+    /**
+     * Set the infoPaint if the player can draw on it 
+     * @param draw True if the player is a drawer and false if he isn't
+     */
     public void isDrawing(boolean draw) {
         if (draw) {
             board.setOnMousePressed(e -> {
@@ -117,6 +118,9 @@ public class DrawingPane extends Parent implements IDrawing {
         color.setValue(newColor);
     }
 
+    /**
+     * Charge the image on the board from the infoDrawing list
+     */
     public void charge() {
         ArrayList<DrawingPoint> list = infoDrawing.getListPoints();
         infoPaint.beginPath();

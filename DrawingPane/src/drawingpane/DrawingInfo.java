@@ -39,9 +39,7 @@ public class DrawingInfo {
      * Set the last point written with the mouse 
      */
     public void release(){
-        listPoints.get(listPoints.size()-1).setIsFinished(true);
-        System.out.println(listPoints.lastIndexOf(this));
-        
+        listPoints.get(listPoints.size()-1).setIsFinished(true);   
     }
 
     /**

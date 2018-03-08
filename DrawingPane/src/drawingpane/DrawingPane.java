@@ -1,7 +1,10 @@
 package drawingpane;
 
 import java.util.ArrayList;
+import javafx.beans.InvalidationListener;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Parent;
 import javafx.scene.canvas.*;
 import javafx.scene.layout.HBox;
@@ -49,25 +52,21 @@ public class DrawingPane extends Parent implements IDrawing {
                 infoPaint.lineTo(e.getX(), e.getY());
                 infoPaint.stroke();
                 infoDrawing.addPoint((Color) infoPaint.getStroke(),
-                        (int) infoPaint.getLineWidth(),
-                        e.getX(), e.getY());
-
+                        (int) infoPaint.getLineWidth(),e.getX(), e.getY());
             });
             board.setOnMouseDragged(e -> {
                 infoPaint.lineTo(e.getX(), e.getY());
                 infoPaint.stroke();
                 infoDrawing.addPoint((Color) infoPaint.getStroke(),
-                        (int) infoPaint.getLineWidth(),
-                        e.getX(), e.getY());
+                        (int) infoPaint.getLineWidth(),e.getX(), e.getY());
             });
             board.setOnMouseDragReleased(e -> {
                 infoDrawing.release();
             });
         } else {
-            board.setOnMousePressed(e -> {
-            });
-            board.setOnMouseDragged(e -> {
-            });
+            board.setOnMousePressed(e -> {});
+            board.setOnMouseDragReleased(e -> {});
+            board.setOnMouseDragged(e -> {});
         }
     }
 
@@ -102,8 +101,9 @@ public class DrawingPane extends Parent implements IDrawing {
     }
 
     @Override
-    public void setThickness(int thickness) {
-        infoPaint.setLineWidth(thickness);
+    public void setThickness(int newThickness) {
+        infoPaint.setLineWidth(newThickness);
+        thickness.setValue(newThickness);
     }
 
     @Override
@@ -112,8 +112,9 @@ public class DrawingPane extends Parent implements IDrawing {
     }
 
     @Override
-    public void setColor(Color color) {
-        infoPaint.setStroke(color);
+    public void setColor(Color newColor) {
+        infoPaint.setStroke(newColor);
+        color.setValue(newColor);
     }
 
     public void charge() {

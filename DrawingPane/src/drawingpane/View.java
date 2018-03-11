@@ -6,8 +6,9 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
- * @author Geekette Force
+ * A class for testing all the drawing components
+ * /!\ This isn't the final main on the class, it's just a testing class
+ * @author G43353
  */
 public class View extends Application {
 

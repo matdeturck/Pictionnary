@@ -11,7 +11,7 @@ public class DrawingInfo {
     private ArrayList<DrawingPoint> listPoints;
     
     /**
-     * COnstructor for the Drawing Info class
+     * Constructor for the Drawing Info class
      */
     DrawingInfo(){
         listPoints = new ArrayList();

@@ -2,6 +2,7 @@ package drawingpane;
 
 import java.util.ArrayList;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.ObjectPropertyBase;
 import javafx.scene.Parent;
 import javafx.scene.canvas.*;
 import javafx.scene.layout.HBox;
@@ -34,7 +35,29 @@ public class DrawingPane extends Parent implements IDrawing {
         infoDrawing = new DrawingInfo();
         infoPaint.setLineWidth(6);
         isDrawing(true);
+        color = new ObjectPropertyBase<Color>(Color.BLACK) {
+            @Override
+            public Object getBean() {
+                return this;
+            }
 
+            @Override
+            public String getName() {
+                return "Color";
+            }
+        };
+        thickness=new ObjectPropertyBase<Integer>(6) {
+            @Override
+            public Object getBean() {
+               return this;
+            }
+
+            @Override
+            public String getName() {
+                return "Thickness";
+            }
+        };
+        
         HBox hbox = new HBox();
         hbox.getChildren().add(board);
         hbox.setStyle("-fx-padding: 5;" + "-fx-border-style: solid inside;"
@@ -104,7 +127,7 @@ public class DrawingPane extends Parent implements IDrawing {
     @Override
     public void setThickness(int newThickness) {
         infoPaint.setLineWidth(newThickness);
-        
+        thickness.set(newThickness);
     }
 
     @Override
@@ -115,7 +138,7 @@ public class DrawingPane extends Parent implements IDrawing {
     @Override
     public void setColor(Color newColor) {
         infoPaint.setStroke(newColor);
-        
+        color.set(newColor);
     }
 
     /**

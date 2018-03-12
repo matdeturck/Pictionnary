@@ -10,13 +10,14 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 
 /**
- * Class for the drawingPane and all the components needed to use it 
+ * Class for the drawingPane and all the components needed to use it
+ *
  * @author G43353
  */
 public class DrawingPaneControl extends Region {
 
     private DrawingPane board;
-    
+
     /**
      * Constructor for DrawingPaneControl
      */
@@ -27,11 +28,7 @@ public class DrawingPaneControl extends Region {
         ColorPicker color = new ColorPicker();
         Button clear = new Button("Clear");
         Slider width = new Slider();
-        Button save = new Button("Save");
-        save.setOnAction(e->{
-            board.charge();
-            
-        });
+
         width = setWidthParam(width);
         color.setOnAction(e -> {
             board.setColor(color.getValue());
@@ -39,29 +36,36 @@ public class DrawingPaneControl extends Region {
         clear.setOnAction(e -> {
             board.clearPane();
         });
-        panel.getChildren().addAll(color, clear,width,save);
+        panel.getChildren().addAll(color, clear, width);
         panelBoard.getChildren().addAll(panel, board);
         getChildren().add(panelBoard);
     }
 
+  
+
     /**
      * Set all the parameter needed for the slider
      */
-    private Slider setWidthParam(Slider width){
+    private Slider setWidthParam(Slider width) {
         width.setMin(5);
         width.setMax(100);
         width.setValue(6);
         width.setShowTickLabels(true);
         width.setShowTickMarks(true);
-        width.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable,
-                    Number oldValue, Number newValue) {
-                board.setThickness((int)width.getValue());
-            }
+        width.valueProperty().addListener((ObservableValue<? extends Number> observable,
+                Number oldValue, Number newValue) -> {
+            board.setThickness((int) width.getValue());
         });
         return width;
     }
 
-    
+    public void setDrawingInfos(DrawingInfo dInfos) {
+        System.out.println(dInfos.getListPoints().size()+"set");
+        board.setDrawingInfos(dInfos);
+    }
+
+    public DrawingInfo getDrawingInfos() {
+        return board.getDrawingInfos(); 
+    }
+
 }

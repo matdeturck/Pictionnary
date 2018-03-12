@@ -97,6 +97,7 @@ public class DrawingPane extends Parent implements IDrawing {
     @Override
     public void clearPane() {
         infoPaint.clearRect(0, 0, board.getWidth(), board.getHeight());
+        infoDrawing = new DrawingInfo();
     }
 
     @Override
@@ -106,7 +107,8 @@ public class DrawingPane extends Parent implements IDrawing {
 
     @Override
     public void setDrawingInfos(DrawingInfo dInfos) {
-        infoDrawing = dInfos;
+        infoDrawing = dInfos; 
+        updateDrawing();
     }
 
     @Override
@@ -144,7 +146,7 @@ public class DrawingPane extends Parent implements IDrawing {
     /**
      * Charge the image on the board from the infoDrawing list
      */
-    public void charge() {
+    private void updateDrawing() {
         ArrayList<DrawingPoint> list = infoDrawing.getListPoints();
         infoPaint.beginPath();
         for (DrawingPoint list1 : list) {

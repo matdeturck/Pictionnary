@@ -1,4 +1,4 @@
-package drawingpane;
+package esi.atl.deTurck.drawingpane;
 
 import javafx.application.Application;
 import javafx.scene.Group;

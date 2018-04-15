@@ -3,11 +3,17 @@ package be.he2b.atl.pictionnary.model;
 import be.he2b.atl.server.AbstractServer;
 import be.he2b.atl.server.ConnectionToClient;
 import esi.atl.deTurck.users.Members;
+import esi.atl.deTurck.users.StatusPlayer;
 import esi.atl.deTurck.users.User;
 import esi.atl.message.Message;
+import esi.atl.message.MessageAllTables;
 import esi.atl.message.MessageMembers;
 import esi.atl.message.MessageProfile;
+import esi.atl.message.MessageCreateTable;
+import esi.atl.message.MessageStatus;
 import esi.atl.message.Type;
+import esi.atl.table.AllTables;
+import esi.atl.table.Table;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
@@ -19,8 +25,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * The <code> PictionnaryServer </code> contains all the methods necessary to set up a
- * Instant messaging server.
+ * The <code> PictionnaryServer </code> contains all the methods necessary to
+ * set up a Instant messaging server.
  */
 public class PictionnaryServer extends AbstractServer {
 
@@ -47,6 +53,8 @@ public class PictionnaryServer extends AbstractServer {
 
     private final Members members;
 
+    private final AllTables tables;
+
     /**
      * Constructs the server. Build a thread to listen connection request.
      *
@@ -56,8 +64,17 @@ public class PictionnaryServer extends AbstractServer {
     public PictionnaryServer() throws IOException {
         super(PORT);
         members = new Members();
+        tables = new AllTables();
         clientId = 0;
         this.listen();
+    }
+
+    public int nbTables() {
+        return tables.size();
+    }
+
+    public AllTables getTables() {
+        return tables;
     }
 
     /**
@@ -128,6 +145,31 @@ public class PictionnaryServer extends AbstractServer {
                 break;
             case MEMBERS:
                 break;
+            case CREATETABLE:
+                int memberIdMsg = (int) client.getInfo(ID_MAPINFO);
+                User authorMsg = message.getAuthor();
+                if (authorMsg.getStatus() == StatusPlayer.ALONE) {
+                    authorMsg.setStatus(StatusPlayer.DRAWER);
+                    members.changeStatus(StatusPlayer.DRAWER,authorMsg.getId());
+                    Table table = new Table(tables.lastIDTable() + 1, authorMsg, message.getContent().toString());
+                    tables.add(table);
+                }
+                sendToAllClients(new MessageMembers(members));
+                sendToClient(new MessageStatus(memberIdMsg,authorMsg.getName(),authorMsg.getStatus()), authorMsg);
+                sendToAllClients(new MessageAllTables(tables));
+                break;
+            case JOINTABLE:
+                int memberIdJoin = (int) client.getInfo(ID_MAPINFO);
+                User authorJoin = message.getAuthor();
+                int idTable = (int) message.getContent();
+                if (authorJoin.getStatus() == StatusPlayer.ALONE && tables.getTable(idTable).isOpen()) {
+                    authorJoin.setStatus(StatusPlayer.GUESSER);
+                    members.changeStatus(StatusPlayer.GUESSER,authorJoin.getId());
+                    tables.addPartenaire(idTable, authorJoin);
+                }
+                sendToClient(new MessageStatus(memberIdJoin,authorJoin.getName(),authorJoin.getStatus()), authorJoin);
+                sendToAllClients(new MessageAllTables(tables));
+                break;
             default:
                 throw new IllegalArgumentException("Message type unknown " + type);
         }
@@ -177,10 +219,10 @@ public class PictionnaryServer extends AbstractServer {
 
     void sendToClient(Message message, int clientId) {
         List<Thread> clientConnections = super.getClientConnections();
-        for (int i =0; i < clientConnections.size(); i++){
+        for (int i = 0; i < clientConnections.size(); i++) {
             ConnectionToClient clientConnection = (ConnectionToClient) clientConnections.get(i);
-            int id = (Integer)clientConnection.getInfo(ID_MAPINFO);
-            if (id == clientId){
+            int id = (Integer) clientConnection.getInfo(ID_MAPINFO);
+            if (id == clientId) {
                 try {
                     clientConnection.sendToClient(message);
                 } catch (IOException ex) {

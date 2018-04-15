@@ -18,6 +18,7 @@ public class MessageProfile implements Message {
      *
      * @param id userID of the author.
      * @param name user name of the author.
+     * @param stats
      */
     public MessageProfile(int id, String name) {
         author = new User(id, name);

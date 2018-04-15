@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="512.0" prefWidth="869.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.he2b.atl.view.graphic.ClientGraphicsController">
+    <stylesheets>
+        <URL value="@clientgraphics.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="33.0" layoutY="47.0" text="Joueurs Connectés" />
+      <TextArea fx:id="connectedPlayer" layoutX="11.0" layoutY="80.0" prefHeight="235.0" prefWidth="238.0" />
+      <TextArea fx:id="connectedTables" layoutX="253.0" layoutY="80.0" prefHeight="235.0" prefWidth="227.0" />
+      <TextArea fx:id="messages" layoutX="486.0" layoutY="80.0" prefHeight="235.0" prefWidth="378.0" />
+      <Label layoutX="329.0" layoutY="47.0" prefHeight="21.0" prefWidth="75.0" text="Tables" />
+      <Label layoutX="428.0" layoutY="14.0" text="Vous" />
+      <Label layoutX="607.0" layoutY="47.0" prefHeight="21.0" prefWidth="75.0" text="Messages" />
+      <TextField fx:id="messagePlayer" layoutX="34.0" layoutY="428.0" prefHeight="31.0" prefWidth="800.0" />
+      <Button fx:id="send" layoutX="392.0" layoutY="467.0" mnemonicParsing="false" onAction="#askCommand" text="Envoyer" />
+      <TextArea fx:id="info" layoutX="20.0" layoutY="319.0" prefHeight="106.0" prefWidth="831.0" />
+   </children>
+</AnchorPane>

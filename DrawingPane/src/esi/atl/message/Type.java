@@ -17,6 +17,18 @@ public enum Type {
     /**
      * General message send between two connected users.
      */
-    MAIL_TO;
+    MAIL_TO,
+    STATUS,
+    ALLTABLES,
+    /**
+     * General message send for creating a table.
+     */
+    CREATETABLE,
+    /**
+     * General message send for join table.
+     */
+    JOINTABLE,
+    
+    DRAW;
 }
 

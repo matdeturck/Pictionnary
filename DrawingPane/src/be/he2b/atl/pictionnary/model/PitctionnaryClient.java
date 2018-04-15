@@ -1,23 +1,28 @@
 package be.he2b.atl.pictionnary.model;
 
-
 import be.he2b.atl.client.AbstractClient;
 import esi.atl.deTurck.users.Members;
 import esi.atl.deTurck.users.User;
 import esi.atl.message.Message;
 import esi.atl.message.MessageProfile;
+import esi.atl.message.MessageCreateTable;
+import esi.atl.message.MessageJoinTable;
 import esi.atl.message.MessageToRecipient;
 import esi.atl.message.Type;
+import esi.atl.table.AllTables;
+import esi.atl.table.Table;
 import java.io.IOException;
-import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
- * The <code> PitctionnaryClient </code> contains all the methods necessary to set up a
- * Instant messaging client.
+ * The <code> PitctionnaryClient </code> contains all the methods necessary to
+ * set up a Instant messaging client.
  */
 public class PitctionnaryClient extends AbstractClient {
 
     private final Members members;
+    private final AllTables tables;
     private User mySelf;
 
     /**
@@ -34,8 +39,10 @@ public class PitctionnaryClient extends AbstractClient {
     public PitctionnaryClient(String host, int port, String name, String password) throws IOException {
         super(host, port);
         openConnection();
+
         updateName(name);
         members = new Members();
+        tables = new AllTables();
     }
 
     @Override
@@ -53,6 +60,23 @@ public class PitctionnaryClient extends AbstractClient {
                 Members members = (Members) message.getContent();
                 updateMembers(members);
                 break;
+            case CREATETABLE: {
+                updateTables(tables);
+                break;
+            }
+            case JOINTABLE: {
+                updateTables(tables);
+                break;
+            }
+            case ALLTABLES: {
+                AllTables tables = (AllTables) message.getContent();
+                updateTables(tables);
+                break;
+            }case STATUS :{
+                setMySelf(message.getAuthor());
+                break;
+            }
+
             default:
                 throw new IllegalArgumentException("Message type unknown " + type);
         }
@@ -122,6 +146,14 @@ public class PitctionnaryClient extends AbstractClient {
         notifyChange();
     }
 
+    void updateTables(AllTables alltable) {
+        this.tables.clear();
+        for (Table table : alltable) {
+            this.tables.add(table);
+        }
+        notifyChange();
+    }
+
     void showMessage(Message message) {
         notifyChange(message);
     }
@@ -149,4 +181,31 @@ public class PitctionnaryClient extends AbstractClient {
         return members.size();
     }
 
+    /**
+     * Return the numbers of connected users.
+     *
+     * @return the numbers of connected users.
+     */
+    public int getNbTables() {
+        return tables.size();
+    }
+
+    public AllTables getTables() {
+        return tables;
+    }
+
+    public void createTable(String nameTable) throws IOException {
+        MessageCreateTable message = new MessageCreateTable(mySelf, nameTable);
+        setChanged();
+        notifyObservers(message);
+        sendToServer(message);
+
+    }
+
+    public void joinTable(int tableID) throws IOException {
+        MessageJoinTable message = new MessageJoinTable(mySelf, tableID);
+        setChanged();
+        notifyObservers(message);
+        sendToServer(message);
+    }
 }

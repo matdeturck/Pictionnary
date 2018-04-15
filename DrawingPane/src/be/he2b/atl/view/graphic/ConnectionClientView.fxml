@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="be.he2b.atl.view.graphic.ConnectionClientViewController">
+    <stylesheets>
+        <URL value="@connectionclientview.css" />
+    </stylesheets>
+   <children>
+      <TextField layoutX="41.0" layoutY="160.0" />
+      <TextField fx:id="namePlayer" layoutX="350.0" layoutY="160.0" />
+      <Label layoutX="117.0" layoutY="123.0" text="Label" />
+      <Label layoutX="373.0" layoutY="123.0" prefHeight="21.0" prefWidth="84.0" text="PlayerName" />
+      <Button fx:id="connection" layoutX="243.0" layoutY="273.0" mnemonicParsing="false" onAction="#GoToServer" text="Connection" />
+      <Label layoutX="232.0" layoutY="41.0" text="Pictionnary">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="663.0" prefWidth="651.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.he2b.atl.view.graphic.ServeurGraphicsController">
+    <stylesheets>
+        <URL value="@serveurgraphics.css" />
+    </stylesheets>
+   <children>
+      <Label layoutX="66.0" layoutY="14.0" prefHeight="21.0" prefWidth="163.0" text="Players Connected" />
+      <Label layoutX="375.0" layoutY="14.0" prefHeight="21.0" prefWidth="256.0" text="Message received" />
+      <TextArea fx:id="msgConnected" layoutX="14.0" layoutY="42.0" prefHeight="328.0" prefWidth="266.0" />
+      <TextArea fx:id="msgField" layoutX="325.0" layoutY="42.0" prefHeight="328.0" prefWidth="279.0" />
+      <TextArea fx:id="tables" layoutX="47.0" layoutY="441.0" prefHeight="200.0" prefWidth="538.0" />
+      <Label layoutX="280.0" layoutY="397.0" text="Tables connected" />
+   </children>
+</AnchorPane>

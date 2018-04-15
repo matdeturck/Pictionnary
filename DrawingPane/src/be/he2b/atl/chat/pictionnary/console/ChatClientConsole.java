@@ -75,7 +75,6 @@ public class ChatClientConsole implements Observer {
             String command = clavier.nextLine();
             String[] splitCommand = command.split(" ");
             if (command.equals("list")) {
-                System.out.println("list");
                 int number = model.getNbConnected();
                 System.out.println("Nombre de client :" + number);
                 for (User user : model.getMembers()) {

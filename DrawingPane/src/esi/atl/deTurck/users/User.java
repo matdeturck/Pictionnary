@@ -21,7 +21,7 @@ public class User implements Serializable {
     private final int id;
     private String name;
     private InetAddress address;
-
+    private StatusPlayer status;
     /**
      * Constructs a connected user.
      *
@@ -33,6 +33,7 @@ public class User implements Serializable {
         this.name = name;
         this.id = id;
         this.address = address;
+        this.status = StatusPlayer.ALONE;
     }
 
     /**
@@ -42,7 +43,12 @@ public class User implements Serializable {
      * @param name name of the connected user.
      */
     public User(int id, String name) {
-        this(id, name, null);
+        this(id, name,(InetAddress) null);
+    }
+
+    public User(int id, String name,StatusPlayer stat) {
+        this(id,name,(InetAddress)null);
+        this.setStatus(stat);
     }
 
     /**
@@ -91,6 +97,14 @@ public class User implements Serializable {
 
     void setName(String name) {
         this.name = name;
+    }
+
+    public StatusPlayer getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusPlayer status) {
+        this.status = status;
     }
 
     /**

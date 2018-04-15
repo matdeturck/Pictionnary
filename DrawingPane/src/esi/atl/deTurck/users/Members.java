@@ -96,6 +96,13 @@ public class Members implements Iterable<User>, Serializable {
         }
     }
 
+       public void changeStatus(StatusPlayer stat, int id) {
+        User user = getUser(id);
+        if (user != null) {
+            user.setStatus(stat);
+        }
+    }
+
     /**
      * Return the user of the given id.
      *

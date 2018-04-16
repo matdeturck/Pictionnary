@@ -25,12 +25,10 @@ public class View extends Application {
         Button save = new Button ("save");
         save.setOnAction(e->{
             dInfos = canvas.getDrawingInfos();
-            System.out.println(dInfos.getListPoints().size()+"set");
         });
         
         Button load = new Button ("load");
         load.setOnAction(e->{
-            System.out.println(dInfos.getListPoints().size()+"load");
             canvas.setDrawingInfos(dInfos);
         });
         

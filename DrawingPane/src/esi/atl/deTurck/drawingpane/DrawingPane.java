@@ -24,7 +24,7 @@ public class DrawingPane extends Parent implements IDrawing {
     /**
      * Constructor for drawingPane
      */
-    DrawingPane() {
+    public DrawingPane() {
         initialize();
     }
 

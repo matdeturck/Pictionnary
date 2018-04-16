@@ -21,7 +21,7 @@ public class DrawingPaneControl extends Region {
     /**
      * Constructor for DrawingPaneControl
      */
-    DrawingPaneControl() {
+    public DrawingPaneControl() {
         VBox panelBoard = new VBox();
         HBox panel = new HBox();
         board = new DrawingPane();

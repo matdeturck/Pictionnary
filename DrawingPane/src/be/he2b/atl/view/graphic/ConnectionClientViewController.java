@@ -50,4 +50,8 @@ public class ConnectionClientViewController implements Initializable {
         
     }
 
+    public TextField getNamePlayer() {
+        return namePlayer;
+    }
+
 }

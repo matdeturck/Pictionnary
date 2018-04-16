@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import esi.atl.deTurck.drawingpane.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="658.0" prefWidth="1021.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.he2b.atl.pictionnary.view.game.PictionnaryClientDrawerController">
+    <stylesheets>
+        <URL value="@pictionnaryclientdrawer.css" />
+    </stylesheets>
+   <children>
+      <DrawingPaneControl fx:id="drawingPane" layoutX="26.0" layoutY="93.0" />
+      <Label layoutX="773.0" layoutY="15.0" prefHeight="32.0" prefWidth="162.0" text="Word to guess : ">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="guessWord" layoutX="952.0" layoutY="18.0" prefHeight="17.0" prefWidth="52.0" text="Word" textFill="#2d1fc9">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="866.0" layoutY="87.0" text="Words Proposed">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+      <Label layoutX="739.0" layoutY="43.0" prefHeight="34.0" prefWidth="190.0" text="State of the game :">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label fx:id="statusTable" layoutX="944.0" layoutY="48.0" prefHeight="25.0" prefWidth="68.0" text="Status" textFill="#281bda">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="wordProposed" layoutX="854.0" layoutY="131.0" prefHeight="514.0" prefWidth="150.0" />
+      <Label fx:id="nameTable" layoutX="38.0" layoutY="18.0" prefHeight="50.0" prefWidth="198.0" text="tableName">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

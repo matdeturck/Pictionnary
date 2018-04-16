@@ -22,6 +22,14 @@ public class Table implements Serializable{
         return tableStat;
     }
 
+    public String getWordToGuess() {
+        return wordToGuess;
+    }
+
+    public String getName() {
+        return name;
+    }
+
     public Table(int id,User drawer,String name) {
         this.id = id;
         open = true;

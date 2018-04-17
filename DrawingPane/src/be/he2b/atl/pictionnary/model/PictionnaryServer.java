@@ -69,10 +69,18 @@ public class PictionnaryServer extends AbstractServer {
         this.listen();
     }
 
+    /**
+     * Get the nmber of tables who are connected to the server
+     * @return int the number of table
+     */
     public int nbTables() {
         return tables.size();
     }
 
+    /**
+     * Get the list of all the tables who are connected to the server
+     * @return AllTable All the tables connected to the server
+     */
     public AllTables getTables() {
         return tables;
     }
@@ -213,6 +221,7 @@ public class PictionnaryServer extends AbstractServer {
         }
     }
 
+    
     void sendToClient(Message message, User recipient) {
         sendToClient(message, recipient.getId());
     }

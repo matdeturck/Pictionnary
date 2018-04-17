@@ -55,6 +55,9 @@ public class ChatServerConsole implements Observer {
 
     }
 
+    /**
+     * Update the list of the users who are connected on the server
+     */
     private void updateUser() {
         System.out.println("");
         StringBuilder builder = new StringBuilder();
@@ -72,7 +75,11 @@ public class ChatServerConsole implements Observer {
         System.out.println(builder);
         System.out.println("");
     }
-
+    
+    /**
+     * Get and show the message to the user
+     * @param message The message who have been received
+     */
     private void updateMessage(Message message) {
         StringBuilder builder = new StringBuilder();
         builder.append("\n---- ---- Message recu ---- ----\n");

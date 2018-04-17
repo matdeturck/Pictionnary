@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package be.he2b.atl.view.graphic;
 
 import be.he2b.atl.chat.pictionnary.console.ChatClientConsole;
@@ -29,7 +24,7 @@ import javafx.scene.control.TextField;
 /**
  * FXML Controller class
  *
- * @author Geekette Force
+ * @author G43353
  */
 public class ClientGraphicsController implements Initializable, Observer {
 
@@ -84,7 +79,11 @@ public class ClientGraphicsController implements Initializable, Observer {
         this.model.addObserver(this);
         updateUser();
     }
-
+    /**
+     * Get the command of a client and see if the command is correct and use it.
+     * @param event  Action of the player for sending the command
+     * @throws IOException If the message failed to reach the server
+     */
     @FXML
     void askCommand(ActionEvent event) throws IOException {
         boolean end = false;
@@ -130,6 +129,9 @@ public class ClientGraphicsController implements Initializable, Observer {
         }
     }
 
+    /**
+     * Print all the command possible for te client 
+     */
     public void printUsage() {
         StringBuilder builder = new StringBuilder();
         builder.append("Usage : \n");
@@ -142,6 +144,9 @@ public class ClientGraphicsController implements Initializable, Observer {
         info.setEditable(false);
     }
 
+    /**
+     * Update the connected users on the screen
+     */
     private void updateUser() {
         connectedPlayer.clear();
         StringBuilder builder = new StringBuilder();
@@ -174,7 +179,10 @@ public class ClientGraphicsController implements Initializable, Observer {
         updateUser();
         updateTables();
     }
-
+    
+    /**
+     * Update the connected table on the screen
+     */
     private void updateTables() {
         connectedTables.clear();
         StringBuilder builder = new StringBuilder();

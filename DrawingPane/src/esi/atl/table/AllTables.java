@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- *
- * @author Geekette Force
+ * List of all tables who are on the server 
+ * @author G4353
  */
 public class AllTables implements Iterable<Table>, Serializable {
 
@@ -49,6 +49,11 @@ public class AllTables implements Iterable<Table>, Serializable {
         tables.add(table);
     }
 
+    /**
+     * Add a partenaire to a table
+     * @param idTable The id of the table who need to add the user
+     * @param user The user who need to be add to the table
+     */
     public void addPartenaire(int idTable, User user) {
         for(Table table:tables){
             if(table.getId()==idTable){
@@ -112,6 +117,10 @@ public class AllTables implements Iterable<Table>, Serializable {
         return find ? current : null;
     }
     
+    /**
+     * Get the last id used for a table
+     * @return int The last id used to create a table.
+     */
     public int lastIDTable(){
         int i =0;
         for(Table table : tables){

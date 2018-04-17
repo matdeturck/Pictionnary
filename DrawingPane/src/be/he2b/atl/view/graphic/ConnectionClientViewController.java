@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package be.he2b.atl.view.graphic;
 
 import java.net.URL;
@@ -21,7 +17,7 @@ import javafx.stage.Stage;
 /**
  * FXML Controller class
  *
- * @author Geekette Force
+ * @author G43353
  */
 public class ConnectionClientViewController implements Initializable {
 
@@ -50,6 +46,10 @@ public class ConnectionClientViewController implements Initializable {
         
     }
 
+    /**
+     * Get the name of the Client 
+     * @return TextField The name of the client 
+     */
     public TextField getNamePlayer() {
         return namePlayer;
     }

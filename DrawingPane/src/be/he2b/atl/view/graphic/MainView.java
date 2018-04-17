@@ -9,8 +9,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
- * @author Geekette Force
+ * Main For all the game on the client
+ * @author G43353
  */
 public class MainView extends Application {
     @Override

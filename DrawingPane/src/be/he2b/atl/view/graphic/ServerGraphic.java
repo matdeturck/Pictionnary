@@ -7,8 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
- * @author Geekette Force
+ * Create the window for the server
+ * @author G43353
  */
 public class ServerGraphic extends Application {
     

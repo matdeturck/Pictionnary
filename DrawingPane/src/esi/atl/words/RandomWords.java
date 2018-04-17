@@ -16,6 +16,7 @@ public class RandomWords {
     private ArrayList<String> words;
     
     public String getWordsRandom(){
-        return "lapin";
+        int nb = (int) (Math.random()*(words.size()));
+        return words.get(nb);
     }
 }

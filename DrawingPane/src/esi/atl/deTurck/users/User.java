@@ -46,6 +46,12 @@ public class User implements Serializable {
         this(id, name,(InetAddress) null);
     }
 
+    /**
+     * Construct a connected user
+     * @param id userID of the connected user.
+     * @param name name of the connected user.
+     * @param stat state of the player 
+     */
     public User(int id, String name,StatusPlayer stat) {
         this(id,name,(InetAddress)null);
         this.setStatus(stat);
@@ -82,6 +88,11 @@ public class User implements Serializable {
         return this.id == other.id;
     }
 
+    /**
+     * Check if the id of the table is the id given in the parameter
+     * @param id The id who need to be tested
+     * @return True if the id is equals to the id of the table
+     */
     boolean is(int id) {
         return this.id == id;
     }
@@ -95,14 +106,26 @@ public class User implements Serializable {
         return id;
     }
 
+    /**
+     * Set the name of the table
+     * @param name The new name of the table
+     */
     void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Get the status of the client 
+     * @return StatusPlayer The current client status
+     */
     public StatusPlayer getStatus() {
         return status;
     }
 
+    /**
+     * Set the status of the client 
+     * @param status The new status of the client 
+     */
     public void setStatus(StatusPlayer status) {
         this.status = status;
     }

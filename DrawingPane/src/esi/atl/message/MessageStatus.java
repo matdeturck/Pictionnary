@@ -5,7 +5,7 @@ import esi.atl.deTurck.users.StatusPlayer;
 import esi.atl.deTurck.users.User;
 
 /**
- *
+ * The <code> Message </code> represents a message with the status of a user 
  * @author Geekette Force
  */
 public class MessageStatus implements Message{
@@ -17,7 +17,7 @@ public class MessageStatus implements Message{
      * message give his profile to be send.
      *
      * @param id userID of the author.
-     * @param stat
+     * @param stat the new status of the user
      */
     public MessageStatus(int id, String name,StatusPlayer stat) {
         author = new User(id, name,stat);
@@ -45,9 +45,9 @@ public class MessageStatus implements Message{
     }
 
     /**
-     * Return the type of the message, in this case Type.PROFILE.
+     * Return the type of the message, in this case Type.STATUS.
      *
-     * @return the type of the message, in this case Type.PROFILE.
+     * @return the type of the message, in this case Type.STATUS.
      */
     @Override
     public Type getType() {

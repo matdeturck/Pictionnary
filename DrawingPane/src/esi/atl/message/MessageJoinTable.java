@@ -1,22 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package esi.atl.message;
 
 import esi.atl.deTurck.users.User;
 import esi.atl.table.AllTables;
 
 /**
- *
- * @author Geekette Force
+ * The <code> Message </code> represents a message with 
+ * the id of the table and user who want to join it
+ * @author G43353
  */
 public class MessageJoinTable implements Message{
     
     private final User author;
     private final int idTable;
-
+    
+    /**
+     * Constructor for messageJoinTable
+     * @param author The author of the message
+     * @param idTable The id of the table
+     */
     public MessageJoinTable(User author, int idTable) {
         this.author = author;
         this.idTable = idTable;
@@ -26,7 +28,7 @@ public class MessageJoinTable implements Message{
      * Return the administrator. The author of a message with all the connected
      * users is the administrator.
      *
-     * @return
+     * @return the author
      */
     @Override
     public User getAuthor() {
@@ -44,9 +46,9 @@ public class MessageJoinTable implements Message{
     }
 
     /**
-     * Return the type of the message, in this case Type.MEMBERS.
+     * Return the type of the message, in this case Type.JOINTABLE.
      *
-     * @return the type of the message, in this case Type.MEMBERS.
+     * @return the type of the message, in this case Type.JOINTABLE.
      */
     @Override
     public Type getType() {
@@ -54,9 +56,9 @@ public class MessageJoinTable implements Message{
     }
 
     /**
-     * Return the content of the message : the list of all connected users.
+     * Return the content of the message : the id of table who need add the user on it.
      *
-     * @return the content of the message : the list of all connected users.
+     * @return the content of the message : the id of table who need add the user on it.
      */
     @Override
     public Object getContent() {

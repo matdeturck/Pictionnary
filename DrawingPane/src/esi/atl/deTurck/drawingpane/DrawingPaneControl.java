@@ -59,11 +59,18 @@ public class DrawingPaneControl extends Region {
         return width;
     }
 
+    /**
+     * Set the info of the draw on the drawng info
+     * @param dInfos  All the point who have been draw
+     */
     public void setDrawingInfos(DrawingInfo dInfos) {
-        System.out.println(dInfos.getListPoints().size()+"set");
         board.setDrawingInfos(dInfos);
     }
 
+    /**
+     * Get the drawing info for print the draw
+     * @return 
+     */
     public DrawingInfo getDrawingInfos() {
         return board.getDrawingInfos(); 
     }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package be.he2b.atl.view.graphic;
 
 import javafx.application.Application;
@@ -12,8 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- *
- * @author Geekette Force
+ * View of the client for get ina table or chat with other client
+ * @author G43353
  */
 public class ClientGraphic extends Application {
     @Override

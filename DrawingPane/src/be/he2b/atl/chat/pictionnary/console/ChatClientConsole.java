@@ -100,7 +100,9 @@ public class ChatClientConsole implements Observer {
         }
 
     }
-
+    /*
+    * Print all the possibility of command for the client
+    */
     private void printUsage() {
         System.out.println("");
         System.out.println("Usage : ");

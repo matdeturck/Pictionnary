@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package be.he2b.atl.pictionnary.view.game;
 
 import esi.atl.deTurck.drawingpane.DrawingPaneControl;

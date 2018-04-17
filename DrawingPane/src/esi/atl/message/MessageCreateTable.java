@@ -1,7 +1,6 @@
 package esi.atl.message;
 
 import esi.atl.deTurck.users.User;
-import esi.atl.table.AllTables;
 
 /**
  *

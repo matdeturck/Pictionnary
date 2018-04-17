@@ -16,17 +16,16 @@ import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
-import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
  *
- * @author Geekette Force
+ * @author G43353
  */
 public class ServeurGraphicsController implements Initializable, Observer {
 
     private PictionnaryServer model;
-    
+
     @FXML
     private TextArea msgConnected;
 
@@ -35,7 +34,7 @@ public class ServeurGraphicsController implements Initializable, Observer {
 
     @FXML
     private TextArea tables;
-        
+
     /**
      * Initializes the controller class.
      */
@@ -64,6 +63,9 @@ public class ServeurGraphicsController implements Initializable, Observer {
         }
     }
 
+    /**
+     * Update the connected users on the screen
+     */
     private void updateUser() {
         msgConnected.clear();
         StringBuilder builder = new StringBuilder();
@@ -83,6 +85,10 @@ public class ServeurGraphicsController implements Initializable, Observer {
         msgConnected.appendText(builder.toString());
     }
 
+    /**
+     * Update the message's client on the server
+     * @param message 
+     */
     private void updateMessage(Message message) {
         StringBuilder builder = new StringBuilder();
         builder.append("\n---- ---- Message recu ---- ----\n");
@@ -92,11 +98,13 @@ public class ServeurGraphicsController implements Initializable, Observer {
         builder.append("Pour : ").append(message.getRecipient()).append("\n");
         builder.append("Contenu\t").append(message.getContent());
         builder.append("\n");
-        
+
         msgField.appendText(builder.toString());
     }
-
-        private void updateTables() {
+    /**
+     * Update the connected table on the screen
+     */
+    private void updateTables() {
         tables.clear();
         StringBuilder builder = new StringBuilder();
         builder.append("\n---- ---- Liste Tables ---- ----\n");
@@ -106,8 +114,8 @@ public class ServeurGraphicsController implements Initializable, Observer {
         for (Table table : model.getTables()) {
             builder.append(table.getId()).append("\t\n");
             builder.append("Joueur").append("\t\t\n");
-            for (int i=0;i< table.getListplayer().size();i++) {
-            builder.append(table.getListplayer().get(i).getName()).append("\t\n");
+            for (int i = 0; i < table.getListplayer().size(); i++) {
+                builder.append(table.getListplayer().get(i).getName()).append("\t\n");
             }
         }
         tables.appendText(builder.toString());

@@ -1,4 +1,4 @@
-package be.he2b.atl.pictionnary.view.game;
+package be.he2b.atl.view.graphic;
 
 import esi.atl.deTurck.drawingpane.DrawingInfo;
 import esi.atl.deTurck.drawingpane.DrawingPaneControl;

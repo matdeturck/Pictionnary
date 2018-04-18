@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  * Main For all the game on the client
  * @author G43353
  */
-public class MainView extends Application {
+public class ConnectionClientView extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ConnectionClientView.fxml"));

@@ -8,20 +8,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="be.he2b.atl.view.graphic.ConnectionClientViewController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="be.he2b.atl.view.graphic.ConnectionClientViewController">
     <stylesheets>
         <URL value="@connectionclientview.css" />
     </stylesheets>
    <children>
-      <TextField layoutX="41.0" layoutY="160.0" />
-      <TextField fx:id="namePlayer" layoutX="350.0" layoutY="160.0" />
-      <Label layoutX="117.0" layoutY="123.0" text="Label" />
-      <Label layoutX="373.0" layoutY="123.0" prefHeight="21.0" prefWidth="84.0" text="PlayerName" />
-      <Button fx:id="connection" layoutX="243.0" layoutY="273.0" mnemonicParsing="false" onAction="#GoToServer" text="Connection" />
+      <TextField fx:id="namePlayer" layoutX="198.0" layoutY="162.0" />
+      <Label layoutX="243.0" layoutY="119.0" prefHeight="21.0" prefWidth="84.0" text="PlayerName" />
+      <Button fx:id="connection" layoutX="243.0" layoutY="219.0" mnemonicParsing="false" onAction="#GoToServer" text="Connection" />
       <Label layoutX="232.0" layoutY="41.0" text="Pictionnary">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
+      <Label fx:id="error" layoutX="173.0" layoutY="298.0" prefHeight="21.0" prefWidth="221.0" />
    </children>
 </AnchorPane>

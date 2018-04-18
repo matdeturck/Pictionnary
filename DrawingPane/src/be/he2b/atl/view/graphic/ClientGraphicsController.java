@@ -2,7 +2,6 @@ package be.he2b.atl.view.graphic;
 
 import be.he2b.atl.chat.pictionnary.console.ChatClientConsole;
 import be.he2b.atl.pictionnary.model.PitctionnaryClient;
-import be.he2b.atl.pictionnary.view.game.PictionnaryClientDrawerController;
 import esi.atl.deTurck.users.User;
 import esi.atl.message.Message;
 import esi.atl.message.Type;
@@ -17,10 +16,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -60,28 +64,20 @@ public class ClientGraphicsController implements Initializable, Observer {
         connectedPlayer.setEditable(false);
         messages.setEditable(false);
         tableGame = null;
-        PitctionnaryClient client = null;
-        this.printUsage();
-        try {
-            String host = "localhost";
-            int port = 12_345;
-            String name = "Lola";
-            String password = "";
-            client = new PitctionnaryClient(host, port, name, password);
-        } catch (IOException ex) {
-            Logger.getLogger(ChatClientConsole.class.getName()).log(Level.SEVERE, "Main error", ex);
-            try {
-                client.quit();
-            } catch (NullPointerException | IOException clientEx) {
-                Logger.getLogger(ChatClientConsole.class.getName()).log(Level.SEVERE, "Quit client error", clientEx);
-            }
-            System.exit(0);
-        }
+    }
+
+    /**
+     * Initialise the client on the model
+     *
+     * @param client the client who have to be in the model
+     */
+    public void setClient(PitctionnaryClient client) {
         this.model = client;
         formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         this.model.addObserver(this);
         updateUser();
         updateTables();
+        printUsage();
     }
 
     /**
@@ -92,92 +88,27 @@ public class ClientGraphicsController implements Initializable, Observer {
      */
     @FXML
     void askCommand(ActionEvent event) throws IOException {
-        boolean end = false;
         String command = messagePlayer.getText();
         String[] splitCommand = command.split(" ");
         if (command.equals("quit")) {
-            try {
-                model.quit();
-                messages.setText("Déconnexion \n");
-            } catch (IOException ex) {
-                Logger.getLogger(ClientGraphicsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            end = true;
+            quit(splitCommand);
         } else if (splitCommand[0].equals("send")) {
-            try {
-                User dest = model.getUsers(Integer.parseInt(splitCommand[1]));
-                String message = " ";
-                for (int i = 2; i < splitCommand.length; i++) {
-                    message += splitCommand[i];
-                    message += " ";
-                }
-                model.sendMessage(dest, message);
-            } catch (IOException ex) {
-                Logger.getLogger(ClientGraphicsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            sendMessage(splitCommand);
         } else if (splitCommand[0].equals("create")) {
             try {
                 model.createTable(splitCommand[1]);
-                messages.appendText("Bienvenue dans la table \n");
-
             } catch (IOException ex) {
                 Logger.getLogger(ClientGraphicsController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            if (model.getTables().isPlayerOnATable(model.getMySelf())) {
-                /**
-                 * try { FXMLLoader fxmlLoader = new
-                 * FXMLLoader(getClass().getResource("PictionnaryClientDrawer.fxml"));
-                 * Parent root1 = (Parent) fxmlLoader.load(); tableGame =
-                 * (PictionnaryClientDrawerController)
-                 * fxmlLoader.getController();
-                 * tableGame.set(model.getTables().getIdTableWithPlayer(model.getMySelf()));
-                 *
-                 * Stage stage = new Stage(); stage.setScene(new Scene(root1));
-                 * stage.show(); } catch (Exception e) { e.printStackTrace(); }
-                 * ((Node) (event.getSource())).getScene().getWindow().hide();
-                 * }*
-                 */
-
-            } else if (splitCommand[0].equals("join")) {
-                try {
-                    model.joinTable(Integer.parseInt(splitCommand[1]));
-                    messages.appendText("Bienvenue dans la table jointe \n");
-                } catch (IOException ex) {
-                    Logger.getLogger(ClientGraphicsController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                if (model.getTables().isPlayerOnATable(model.getMySelf())) {
-                    /**
-                     * try { FXMLLoader fxmlLoader = new
-                     * FXMLLoader(getClass().getResource("PictionnaryClientDrawer.fxml"));
-                     * Parent root1 = (Parent) fxmlLoader.load(); tableGame =
-                     * (PictionnaryClientDrawerController)
-                     * fxmlLoader.getController();
-                     * tableGame.set(model.getTables().getIdTableWithPlayer(model.getMySelf()));
-                     * Stage stage = new Stage(); stage.setScene(new
-                     * Scene(root1)); stage.show(); } catch (Exception e) {
-                     * e.printStackTrace(); } ((Node)
-                     * (event.getSource())).getScene().getWindow().hide(); }*
-                     */
-                } else {
-                    messages.appendText("Désolé vous êtes déjà dans une table");
-                }
+        } else if (splitCommand[0].equals("join")) {
+            try {
+                model.joinTable(Integer.parseInt(splitCommand[1]));
+            } catch (IOException ex) {
+                Logger.getLogger(ClientGraphicsController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            messages.appendText("Désolé votre commande est incorrecte");
         }
-    }
-
-    /**
-     * Print all the command possible for te client
-     */
-    public void printUsage() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Usage : \n");
-        builder.append("\tEnvoyer un message à un utilisateur connecté\t:"
-                + "\tsend <userID> <message> \n");
-        builder.append("\tCréer une table \t:\tcreate <tableName> \n");
-        builder.append("\tJoindre une table \t:\tjoin <tableID> \n");
-        builder.append("\tSe deconnecter\t:\tquit  \n");
-        info.appendText(builder.toString());
-        info.setEditable(false);
     }
 
     @Override
@@ -188,10 +119,61 @@ public class ClientGraphicsController implements Initializable, Observer {
                 messages.setText(messages.getText() + "Vous avez reçu le message : "
                         + message.getContent()
                         + " \n de : " + message.getAuthor().getName() + "\n");
+            } else if (message.getType().equals(Type.CREATETABLE)) {
+                messages.appendText("Bienvenue dans la table");
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(getClass().getResource("/be/he2b/atl/view/graphic/1.fxml"));
+                    Parent root1 = fxmlLoader.load();
+                    tableGame = (PictionnaryClientDrawerController) fxmlLoader.getController();
+                    fxmlLoader.getController();
+
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root1));
+                    stage.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else if (message.getType().equals(Type.JOINTABLE)) {
+                messages.appendText("Merci d'avoir rejoint la table");
             }
         }
         updateUser();
         updateTables();
+    }
+
+    /**
+     * Method for quit the server
+     *
+     * @param splitCommand The command of the user
+     */
+    public void quit(String[] splitCommand) {
+        try {
+            model.quit();
+            messages.setText("Déconnexion \n");
+        } catch (IOException ex) {
+            Logger.getLogger(ClientGraphicsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.exit(0);
+    }
+
+    /**
+     * Method for sending message
+     *
+     * @param splitCommand The command of the user
+     */
+    public void sendMessage(String[] splitCommand) {
+        try {
+            User dest = model.getUsers(Integer.parseInt(splitCommand[1]));
+            String message = " ";
+            for (int i = 2; i < splitCommand.length; i++) {
+                message += splitCommand[i];
+                message += " ";
+            }
+            model.sendMessage(dest, message);
+        } catch (IOException ex) {
+            Logger.getLogger(ClientGraphicsController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -227,12 +209,28 @@ public class ClientGraphicsController implements Initializable, Observer {
                 .append(model.getNbTables()).append("\n");
         for (Table table : model.getTables()) {
             builder.append("ID : ").append("\t");
-            builder.append(table.getId()).append("\t");
+            builder.append(table.getId()).append("\t\n");
             builder.append("Joueur :").append("\t\t\n");
             for (int i = 0; i < table.getListplayer().size(); i++) {
-                builder.append(table.getListplayer().get(i).getName()).append("\t\n");
+                builder.append(table.getListplayer().get(i).getName()).append("\t, \t");
             }
         }
         connectedTables.appendText(builder.toString());
     }
+
+    /**
+     * Print all the command possible for te client
+     */
+    public void printUsage() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("Usage : \n");
+        builder.append("\tEnvoyer un message à un utilisateur connecté\t:"
+                + "\tsend <userID> <message> \n");
+        builder.append("\tCréer une table \t:\tcreate <tableName> \n");
+        builder.append("\tJoindre une table \t:\tjoin <tableID> \n");
+        builder.append("\tSe deconnecter\t:\tquit  \n");
+        info.appendText(builder.toString());
+        info.setEditable(false);
+    }
+
 }

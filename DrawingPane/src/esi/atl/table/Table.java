@@ -89,7 +89,7 @@ public class Table implements Serializable{
     
     public boolean isPlayerOnTable(User user){
         for (User current : listPlayer){
-            if(current.equals(user)){
+            if(current.getId()==user.getId()){
                 return true;
             }
         }

@@ -10,6 +10,7 @@ import esi.atl.message.MessageAllTables;
 import esi.atl.message.MessageMembers;
 import esi.atl.message.MessageProfile;
 import esi.atl.message.MessageCreateTable;
+import esi.atl.message.MessageJoinTable;
 import esi.atl.message.MessageStatus;
 import esi.atl.message.Type;
 import esi.atl.table.AllTables;
@@ -71,6 +72,7 @@ public class PictionnaryServer extends AbstractServer {
 
     /**
      * Get the nmber of tables who are connected to the server
+     *
      * @return int the number of table
      */
     public int nbTables() {
@@ -79,6 +81,7 @@ public class PictionnaryServer extends AbstractServer {
 
     /**
      * Get the list of all the tables who are connected to the server
+     *
      * @return AllTable All the tables connected to the server
      */
     public AllTables getTables() {
@@ -158,13 +161,13 @@ public class PictionnaryServer extends AbstractServer {
                 User authorMsg = message.getAuthor();
                 if (authorMsg.getStatus() == StatusPlayer.ALONE) {
                     authorMsg.setStatus(StatusPlayer.DRAWER);
-                    members.changeStatus(StatusPlayer.DRAWER,authorMsg.getId());
+                    members.changeStatus(StatusPlayer.DRAWER, authorMsg.getId());
                     Table table = new Table(tables.lastIDTable() + 1, authorMsg, message.getContent().toString());
                     tables.add(table);
+                    sendToClient(new MessageStatus(memberIdMsg, authorMsg.getName(), authorMsg.getStatus()), authorMsg);
+                    sendToClient(new MessageCreateTable(authorMsg, table.getName()), authorMsg);
+                    sendToAllClients(new MessageAllTables(tables));
                 }
-               
-                sendToClient(new MessageStatus(memberIdMsg,authorMsg.getName(),authorMsg.getStatus()), authorMsg);
-                sendToAllClients(new MessageAllTables(tables));
                 break;
             case JOINTABLE:
                 int memberIdJoin = (int) client.getInfo(ID_MAPINFO);
@@ -172,11 +175,12 @@ public class PictionnaryServer extends AbstractServer {
                 int idTable = (int) message.getContent();
                 if (authorJoin.getStatus() == StatusPlayer.ALONE && tables.getTable(idTable).isOpen()) {
                     authorJoin.setStatus(StatusPlayer.GUESSER);
-                    members.changeStatus(StatusPlayer.GUESSER,authorJoin.getId());
+                    members.changeStatus(StatusPlayer.GUESSER, authorJoin.getId());
                     tables.addPartenaire(idTable, authorJoin);
+                    sendToClient(new MessageStatus(memberIdJoin, authorJoin.getName(), authorJoin.getStatus()), authorJoin);
+                    sendToClient(new MessageJoinTable(authorJoin, idTable), authorJoin);
+                    sendToAllClients(new MessageAllTables(tables));
                 }
-                sendToClient(new MessageStatus(memberIdJoin,authorJoin.getName(),authorJoin.getStatus()), authorJoin);
-                sendToAllClients(new MessageAllTables(tables));
                 break;
             default:
                 throw new IllegalArgumentException("Message type unknown " + type);
@@ -221,7 +225,6 @@ public class PictionnaryServer extends AbstractServer {
         }
     }
 
-    
     void sendToClient(Message message, User recipient) {
         sendToClient(message, recipient.getId());
     }

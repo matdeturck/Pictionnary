@@ -75,4 +75,8 @@ public class DrawingPaneControl extends Region {
         return board.getDrawingInfos(); 
     }
 
+    public DrawingPane getBoard() {
+        return board;
+    }
+
 }

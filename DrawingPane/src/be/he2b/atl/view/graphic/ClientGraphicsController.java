@@ -2,6 +2,7 @@ package be.he2b.atl.view.graphic;
 
 import be.he2b.atl.chat.pictionnary.console.ChatClientConsole;
 import be.he2b.atl.pictionnary.model.PitctionnaryClient;
+import be.he2b.atl.pictionnary.view.game.PictionnaryClientDrawerController;
 import esi.atl.deTurck.users.User;
 import esi.atl.message.Message;
 import esi.atl.message.Type;
@@ -30,6 +31,7 @@ public class ClientGraphicsController implements Initializable, Observer {
 
     private PitctionnaryClient model;
     private DateTimeFormatter formatter;
+    private PictionnaryClientDrawerController tableGame;
 
     @FXML
     private TextArea connectedTables;
@@ -57,6 +59,7 @@ public class ClientGraphicsController implements Initializable, Observer {
         connectedTables.setEditable(false);
         connectedPlayer.setEditable(false);
         messages.setEditable(false);
+        tableGame = null;
         PitctionnaryClient client = null;
         this.printUsage();
         try {
@@ -78,10 +81,13 @@ public class ClientGraphicsController implements Initializable, Observer {
         formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         this.model.addObserver(this);
         updateUser();
+        updateTables();
     }
+
     /**
      * Get the command of a client and see if the command is correct and use it.
-     * @param event  Action of the player for sending the command
+     *
+     * @param event Action of the player for sending the command
      * @throws IOException If the message failed to reach the server
      */
     @FXML
@@ -113,24 +119,54 @@ public class ClientGraphicsController implements Initializable, Observer {
             try {
                 model.createTable(splitCommand[1]);
                 messages.appendText("Bienvenue dans la table \n");
-            } catch (IOException ex) {
-                Logger.getLogger(ClientGraphicsController.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
-        } else if (splitCommand[0].equals("join")) {
-            try {
-                model.joinTable(Integer.parseInt(splitCommand[1]));
-                messages.appendText("Bienvenue dans la table jointe \n");
             } catch (IOException ex) {
                 Logger.getLogger(ClientGraphicsController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } else {
-            messages.appendText("Désolé vous êtes déjà dans une table");
+            if (model.getTables().isPlayerOnATable(model.getMySelf())) {
+                /**
+                 * try { FXMLLoader fxmlLoader = new
+                 * FXMLLoader(getClass().getResource("PictionnaryClientDrawer.fxml"));
+                 * Parent root1 = (Parent) fxmlLoader.load(); tableGame =
+                 * (PictionnaryClientDrawerController)
+                 * fxmlLoader.getController();
+                 * tableGame.set(model.getTables().getIdTableWithPlayer(model.getMySelf()));
+                 *
+                 * Stage stage = new Stage(); stage.setScene(new Scene(root1));
+                 * stage.show(); } catch (Exception e) { e.printStackTrace(); }
+                 * ((Node) (event.getSource())).getScene().getWindow().hide();
+                 * }*
+                 */
+
+            } else if (splitCommand[0].equals("join")) {
+                try {
+                    model.joinTable(Integer.parseInt(splitCommand[1]));
+                    messages.appendText("Bienvenue dans la table jointe \n");
+                } catch (IOException ex) {
+                    Logger.getLogger(ClientGraphicsController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                if (model.getTables().isPlayerOnATable(model.getMySelf())) {
+                    /**
+                     * try { FXMLLoader fxmlLoader = new
+                     * FXMLLoader(getClass().getResource("PictionnaryClientDrawer.fxml"));
+                     * Parent root1 = (Parent) fxmlLoader.load(); tableGame =
+                     * (PictionnaryClientDrawerController)
+                     * fxmlLoader.getController();
+                     * tableGame.set(model.getTables().getIdTableWithPlayer(model.getMySelf()));
+                     * Stage stage = new Stage(); stage.setScene(new
+                     * Scene(root1)); stage.show(); } catch (Exception e) {
+                     * e.printStackTrace(); } ((Node)
+                     * (event.getSource())).getScene().getWindow().hide(); }*
+                     */
+                } else {
+                    messages.appendText("Désolé vous êtes déjà dans une table");
+                }
+            }
         }
     }
 
     /**
-     * Print all the command possible for te client 
+     * Print all the command possible for te client
      */
     public void printUsage() {
         StringBuilder builder = new StringBuilder();
@@ -142,6 +178,20 @@ public class ClientGraphicsController implements Initializable, Observer {
         builder.append("\tSe deconnecter\t:\tquit  \n");
         info.appendText(builder.toString());
         info.setEditable(false);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg != null) {
+            Message message = (Message) arg;
+            if (message.getType().equals(Type.MAIL_TO)) {
+                messages.setText(messages.getText() + "Vous avez reçu le message : "
+                        + message.getContent()
+                        + " \n de : " + message.getAuthor().getName() + "\n");
+            }
+        }
+        updateUser();
+        updateTables();
     }
 
     /**
@@ -166,20 +216,6 @@ public class ClientGraphicsController implements Initializable, Observer {
         connectedPlayer.appendText(builder.toString());
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-        if (arg != null) {
-            Message message = (Message) arg;
-            if (message.getType().equals(Type.MAIL_TO)) {
-                messages.setText(messages.getText() + "Vous avez reçu le message : "
-                        + message.getContent()
-                        + " \n de : " + message.getAuthor().getName() + "\n");
-            }
-        }
-        updateUser();
-        updateTables();
-    }
-    
     /**
      * Update the connected table on the screen
      */
@@ -190,7 +226,7 @@ public class ClientGraphicsController implements Initializable, Observer {
         builder.append("Nombre de Tables connectes : ")
                 .append(model.getNbTables()).append("\n");
         for (Table table : model.getTables()) {
-            builder.append("ID : ").append("\t"); 
+            builder.append("ID : ").append("\t");
             builder.append(table.getId()).append("\t");
             builder.append("Joueur :").append("\t\t\n");
             for (int i = 0; i < table.getListplayer().size(); i++) {

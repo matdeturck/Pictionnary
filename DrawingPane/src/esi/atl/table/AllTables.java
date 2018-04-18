@@ -130,4 +130,21 @@ public class AllTables implements Iterable<Table>, Serializable {
         }
         return i;
     }
+    
+    public Table getIdTableWithPlayer(User user){
+        for(Table table:tables){
+            if(table.isPlayerOnTable(user)){
+                return table;
+            }
+        }
+        return null;
+    }
+    public boolean isPlayerOnATable(User user){
+        for(Table table:tables){
+            if(table.isPlayerOnTable(user)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

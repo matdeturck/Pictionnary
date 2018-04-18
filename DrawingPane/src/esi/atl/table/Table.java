@@ -87,4 +87,13 @@ public class Table implements Serializable{
         return it==id;
     }
     
+    public boolean isPlayerOnTable(User user){
+        for (User current : listPlayer){
+            if(current.equals(user)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }

@@ -162,7 +162,7 @@ public class PictionnaryServer extends AbstractServer {
                     Table table = new Table(tables.lastIDTable() + 1, authorMsg, message.getContent().toString());
                     tables.add(table);
                 }
-                sendToAllClients(new MessageMembers(members));
+               
                 sendToClient(new MessageStatus(memberIdMsg,authorMsg.getName(),authorMsg.getStatus()), authorMsg);
                 sendToAllClients(new MessageAllTables(tables));
                 break;

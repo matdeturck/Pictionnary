@@ -91,6 +91,7 @@ public class DrawingPane extends Parent implements IDrawing {
             board.setOnMousePressed(e -> {});
             board.setOnMouseDragReleased(e -> {});
             board.setOnMouseDragged(e -> {});
+            board.setOnMouseReleased(e -> {});
         }
     }
 

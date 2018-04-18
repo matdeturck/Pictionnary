@@ -1,8 +1,15 @@
 
 package be.he2b.atl.view.graphic;
 
+import be.he2b.atl.chat.pictionnary.console.ChatClientConsole;
+import be.he2b.atl.pictionnary.model.PitctionnaryClient;
+import java.io.IOException;
 import java.net.URL;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -53,5 +60,6 @@ public class ConnectionClientViewController implements Initializable {
     public TextField getNamePlayer() {
         return namePlayer;
     }
+
 
 }

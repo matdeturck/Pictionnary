@@ -136,6 +136,19 @@ public class ClientGraphicsController implements Initializable, Observer {
                 }
             } else if (message.getType().equals(Type.JOINTABLE)) {
                 messages.appendText("Merci d'avoir rejoint la table");
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader();
+                    fxmlLoader.setLocation(getClass().getResource("/be/he2b/atl/view/graphic/1.fxml"));
+                    Parent root1 = fxmlLoader.load();
+                    tableGame = (PictionnaryClientDrawerController) fxmlLoader.getController();
+                    fxmlLoader.getController();
+
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root1));
+                    stage.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         updateUser();
